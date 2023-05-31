@@ -1,10 +1,10 @@
 # Water devide problems を解くアルゴリズム
 
 ## 実行の仕方（Usage）
-`n_jugs`: 水差しの数
-`n_splits`: 何個の平均を作るか
-`size of jug`: 水差しの最大容量
-`amount of jug`: 水差しのにある水量
+`n_jugs`: 水差しの数  
+`n_splits`: 何個の平均を作るか  
+`size of jug`: 水差しの最大容量  
+`amount of jug`: 水差しのにある水量  
 
 ## 実行結果（Result）
 
@@ -20,7 +20,7 @@ amount of jug 2: 6
 amount of jug 3: 4
 ```
 
-出力例（Output）：
+出力例（Output）：  
 解がある場合：
 ```
 step:  2
