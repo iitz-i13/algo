@@ -1,3 +1,5 @@
+INF = float('inf')
+
 def floyd_warshall(graph):
     vertices = list(graph.keys())
     n = len(vertices)
