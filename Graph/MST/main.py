@@ -57,6 +57,34 @@ def kruskal(edges, num_vertices):
 
     return mst_cost
 
+def boruvka(graph):
+    num_vertices = len(graph)
+    mst_cost = 0
+    components = [i for i in range(num_vertices)]
+
+    while len(set(components)) > 1:
+        cheapest_edge = [float('inf')] * num_vertices
+        cheapest_edge_info = [(None, None)] * num_vertices
+
+        for u in range(num_vertices):
+            for v, weight in graph[u].items():
+                component_u = components[u]
+                component_v = components[v]
+                if component_u != component_v and weight < cheapest_edge[component_u]:
+                    cheapest_edge[component_u] = weight
+                    cheapest_edge_info[component_u] = (u, v)
+
+        for u in range(num_vertices):
+            if cheapest_edge[u] != float('inf'):
+                u, v = cheapest_edge_info[u]
+                component_u = components[u]
+                component_v = components[v]
+                if component_u != component_v:
+                    mst_cost += cheapest_edge[u]
+                    components[component_u] = component_v
+
+    return mst_cost
+
 graph = {
     0: {1: 10, 2: 6, 3: 5},
     1: {0: 10, 3: 15},
@@ -65,14 +93,33 @@ graph = {
 }
 edges = [(0, 1, 10), (0, 2, 6), (0, 3, 5), (1, 3, 15), (2, 3, 4)]
 
-# Prim法の処理時間計測
-start_time = time.time()
-prim(graph, 0)
-end_time = time.time()
-print("Prim Time:", end_time - start_time)
+# 各アルゴリズムの平均実行時間を計測
+num_iterations = 10000
+prim_times = []
+kruskal_times = []
+boruvka_times = []
 
-# クラスカル法(Union-Find)の処理時間計測
-start_time = time.time()
-kruskal(edges, len(graph))
-end_time = time.time()
-print("Kruskal Time:", end_time - start_time)
+for _ in range(num_iterations):
+    start_time = time.time()
+    prim(graph, 0)
+    end_time = time.time()
+    prim_times.append(end_time - start_time)
+
+    start_time = time.time()
+    kruskal(edges, len(graph))
+    end_time = time.time()
+    kruskal_times.append(end_time - start_time)
+
+    start_time = time.time()
+    boruvka(graph)
+    end_time = time.time()
+    boruvka_times.append(end_time - start_time)
+
+# 平均実行時間を計算
+avg_prim_time = sum(prim_times) / num_iterations
+avg_kruskal_time = sum(kruskal_times) / num_iterations
+avg_boruvka_time = sum(boruvka_times) / num_iterations
+
+print("Average Prim Time:", avg_prim_time)
+print("Average Kruskal Time:", avg_kruskal_time)
+print("Average Boruvka Time:", avg_boruvka_time)
